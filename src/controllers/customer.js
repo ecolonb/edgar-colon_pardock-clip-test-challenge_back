@@ -1,8 +1,12 @@
-const openpay = require("../helpers/openpay");
+const {
+  customerList,
+  customerCreate,
+  customerUpdate
+} = require("../services/openpay");
 
 const getAll = async (req, res) => {
   try {
-    const result = await openpay.customerList();
+    const result = await customerList();
     return res
       .status(200)
       .json({ ok: true, mssg: "customerList", response: result.response });
@@ -15,7 +19,7 @@ const newCustomer = async (req, res) => {
   const customerData = req.body;
 
   try {
-    const { response } = await openpay.customerCreate(customerData);
+    const { response } = await customerCreate(customerData);
     return res.status(201).json({ ok: true, mssg: "newCustomer", response });
   } catch (error) {
     return res.status(400).json({ ok: false, mssg: "newCustomer", error });
@@ -27,7 +31,7 @@ const updateCustomer = async (req, res) => {
   const customerData = req.body;
 
   try {
-    const result = await openpay.customerUpdate(customerId, customerData);
+    const result = await customerUpdate(customerId, customerData);
     return res.status(200).json({ ok: true, mssg: "updateCustomer", result });
   } catch (error) {
     return res.status(400).json({ ok: false, mssg: "updateCustomer", error });
