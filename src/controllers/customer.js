@@ -15,10 +15,8 @@ const newCustomer = async (req, res) => {
   const customerData = req.body;
 
   try {
-    const result = await openpay.customerCreate(customerData);
-    return res
-      .status(200)
-      .json({ ok: true, mssg: "newCustomer", response: result.response });
+    const { response } = await openpay.customerCreate(customerData);
+    return res.status(201).json({ ok: true, mssg: "newCustomer", response });
   } catch (error) {
     return res.status(400).json({ ok: false, mssg: "newCustomer", error });
   }
