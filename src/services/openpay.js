@@ -25,9 +25,18 @@ const customerUpdate = (customerId, data) => {
     });
   });
 };
+const customerDelete = (customerId) => {
+  return new Promise((resolve, reject) => {
+    openpay.customers.delete(customerId, function (error) {
+      if (error) return reject({ error });
+      return resolve(true);
+    });
+  });
+};
 
 module.exports = {
   customerList,
   customerCreate,
-  customerUpdate
+  customerUpdate,
+  customerDelete
 };

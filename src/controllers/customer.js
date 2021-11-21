@@ -1,7 +1,8 @@
 const {
   customerList,
   customerCreate,
-  customerUpdate
+  customerUpdate,
+  customerDelete
 } = require("../services/openpay");
 
 const getAll = async (req, res) => {
@@ -41,9 +42,25 @@ const updateCustomer = async (req, res) => {
     return res.status(400).json({ ok: false, message: "error", error });
   }
 };
+const deleteCustomer = async (req, res) => {
+  const customerId = req.params.customerId;
+  try {
+    await customerDelete(customerId);
+    return res.status(200).json({ ok: true, message: "success" });
+  } catch (error) {
+    return res
+      .status(400)
+      .json({
+        ok: false,
+        message: "error",
+        error: error.error || error.message
+      });
+  }
+};
 
 module.exports = {
   getAll,
   newCustomer,
-  updateCustomer
+  updateCustomer,
+  deleteCustomer
 };

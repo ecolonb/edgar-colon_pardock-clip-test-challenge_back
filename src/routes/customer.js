@@ -7,7 +7,8 @@ const { validateJWT: checkAuth } = require("../middlewares/auth");
 const {
   getAll,
   newCustomer,
-  updateCustomer
+  updateCustomer,
+  deleteCustomer
 } = require("../controllers/customer");
 
 const router = Router();
@@ -19,5 +20,6 @@ router.patch(
   [checkAuth, ...validateInputs],
   updateCustomer
 );
+router.delete("/delete/:customerId", checkAuth, deleteCustomer);
 
 module.exports = router;
