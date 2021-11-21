@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const AccessToken = require("../models/AccessToken");
-const EXPIRE_IN = process.env.TOKEN_EXPIRE_IN || 3600;
+const EXPIRE_IN = Number(process.env.TOKEN_EXPIRE_IN) || 3600;
+const SECRET = process.env.SECRET_JWT;
 
 const registerAccessToken = async (token, userId, expireIn) => {
   try {
@@ -14,10 +15,11 @@ const registerAccessToken = async (token, userId, expireIn) => {
 
 const createAccessToken = async (userId) => {
   try {
-    const secret = process.env.SECRET_JWT;
     const now = new Date();
     const UUID = now.getTime();
-    const token = await jwt.sign({ UUID }, secret, { expiresIn: EXPIRE_IN });
+    const token = await jwt.sign({ UUID }, SECRET, {
+      expiresIn: EXPIRE_IN
+    });
     const expireIn = new Date(now.getTime() + EXPIRE_IN * 1000);
     await registerAccessToken(token, userId, expireIn);
     return token;

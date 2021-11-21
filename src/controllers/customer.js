@@ -6,12 +6,14 @@ const {
 
 const getAll = async (req, res) => {
   try {
-    const result = await customerList();
-    return res
-      .status(200)
-      .json({ ok: true, mssg: "customerList", response: result.response });
+    const { response } = await customerList();
+    return res.status(200).json({
+      ok: true,
+      message: "success",
+      items: [...response.body]
+    });
   } catch (error) {
-    return res.status(400).json({ ok: false, mssg: "customerList", error });
+    return res.status(400).json({ ok: false, message: "error", error });
   }
 };
 
@@ -20,9 +22,11 @@ const newCustomer = async (req, res) => {
 
   try {
     const { response } = await customerCreate(customerData);
-    return res.status(201).json({ ok: true, mssg: "newCustomer", response });
+    return res
+      .status(201)
+      .json({ ok: true, message: "success", customer: { ...response.body } });
   } catch (error) {
-    return res.status(400).json({ ok: false, mssg: "newCustomer", error });
+    return res.status(400).json({ ok: false, message: "error", error });
   }
 };
 
@@ -32,9 +36,9 @@ const updateCustomer = async (req, res) => {
 
   try {
     const result = await customerUpdate(customerId, customerData);
-    return res.status(200).json({ ok: true, mssg: "updateCustomer", result });
+    return res.status(200).json({ ok: true, message: "success", result });
   } catch (error) {
-    return res.status(400).json({ ok: false, mssg: "updateCustomer", error });
+    return res.status(400).json({ ok: false, message: "error", error });
   }
 };
 
