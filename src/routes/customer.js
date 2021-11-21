@@ -9,6 +9,6 @@ const router = Router();
 
 router.get("/all", getAll);
 router.post("/new", newCustomer);
-router.patch("/update", updateCustomer);
+router.patch("/update/:customerId", updateCustomer);
 
 module.exports = router;
