@@ -41,9 +41,9 @@ const signIn = async (req, res = response) => {
     if (!isValidPassword) return errorResponse(res);
 
     const token = await createAccessToken(user._id);
-
     return res.status(200).json({ ok: true, mssg: "signIn", user, token });
   } catch (error) {
+    console.log("error:", error);
     return res.status(500).json({
       ok: false,
       mssg: "Error signIn",

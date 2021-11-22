@@ -1,4 +1,4 @@
-const openpay = require("../helpers/openpay");
+const openpay = require("../config/openpay");
 
 const customerList = () => {
   return new Promise((resolve, reject) => {
