@@ -43,7 +43,7 @@ const signIn = async (req, res = response) => {
     const token = await createAccessToken(user._id);
     return res.status(200).json({ ok: true, mssg: "signIn", user, token });
   } catch (error) {
-    console.log("error:", error);
+    console.log("err:", error);
     return res.status(500).json({
       ok: false,
       mssg: "Error signIn",
